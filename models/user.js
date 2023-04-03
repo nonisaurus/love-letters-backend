@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
     },
     profileImg: { data: Buffer, contentType: String, required: false },
     bio: { type: String, required: false },
+    points: {
+        type: Number,
+        default: 0
+      }
   }, {
     timestamps: true
   });
