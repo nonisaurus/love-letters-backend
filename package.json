@@ -1,0 +1,23 @@
+{
+  "name": "love-letters-backend",
+  "version": "1.0.0",
+  "description": "Readme of the full project can be find here.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nonisaurus/love-letters-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nonisaurus/love-letters-backend/issues"
+  },
+  "homepage": "https://github.com/nonisaurus/love-letters-backend#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3"
+  }
+}
