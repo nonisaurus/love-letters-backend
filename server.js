@@ -12,6 +12,7 @@ mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
 // Require Route Files
 const indexRouter = require('./routes/index');
 const cardsRouter = require('./routes/cards');
+const usersRouter = require('./routes/users');
 
 // Instantiate Express Application Object
 const app = express();
@@ -30,6 +31,7 @@ app.use(express.json());
 */
 app.use(indexRouter);
 app.use(cardsRouter);
+app.use(usersRouter);
 
 // Start the server and listen for requests on the given port
 app.listen(port, () => console.log(`listening on port ${port}`));

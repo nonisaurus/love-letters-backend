@@ -9,17 +9,17 @@ const userSchema = new mongoose.Schema({
       minlength: 5,
       maxlength: 30
     },
-    firstName: { type: String, required: false },
-    sureName: { type: String, required: false },
-    DOB: { type: Date, required: false },
+    firstName: { type: String},
+    lastName: { type: String},
+    DOB: { type: Date},
     email: { type: String, required: true },
     password: {
       type: String,
       required: true,
       minlength: 6
     },
-    profileImg: { data: Buffer, contentType: String, required: false },
-    bio: { type: String, required: false },
+    profileImg: { data: Buffer, contentType: String},
+    bio: { type: String},
     points: {
         type: Number,
         default: 0
