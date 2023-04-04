@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 // Define Card Schema
 const cardSchema = new mongoose.Schema({
     name: {type: String, required: true},
-    score: {type: Number, required: true},
+    score: {type: String, required: true},
     effect: {type: String, required: true},
     quantity: {type: String, required: true},
     picture: {type: String}
