@@ -114,9 +114,9 @@ router.patch('/api/users/:userID', (req, res) => {
 })
 
 /*
-Action:        DESTROY
-Method:        DELETE
-URI:        /api/user/:userID
+Action:         DESTROY
+Method:         DELETE
+URI:            /api/user/:userID
 Description:    Delete user via user id
 */
 router.delete('/api/users/:userID', (req, res) => {
