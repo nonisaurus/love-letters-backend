@@ -80,7 +80,7 @@ router.put('/api/messages/:id', (req, res) => {
     Message.findById(req.params.id)
     .then((message) => {
         if (message) {
-            return message.update(req.body.message)
+            return message.updateOne(req.body.message)
         } else {
             res.status(404).json({
                 error: {
@@ -111,7 +111,7 @@ router.delete('/api/messages/:id', (req, res) => {
         console.log('message:', message);
         if (message) {
           // Pass the result of Mongoose's `.remove` method to the next `.then`
-          return message.remove();
+          return message.deleteOne();
         } else {
           // If we coudn't find a document with the matching ID
           res.status(404).json({
