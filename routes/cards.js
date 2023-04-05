@@ -28,7 +28,7 @@ router.get('/api/cards', (req, res) => {
 /**
  * Action:          SHOW
  * Method:          GET
- * URI:             
+ * URI:             /api/cards/:id
  * Description:     Get a Card by Card ID
  */
 router.get('/api/cards/:id', (req, res) => {
@@ -51,7 +51,6 @@ router.get('/api/cards/:id', (req, res) => {
         res.status(500).json({ error: error });
       });
   });
-
   
   /**
    * Action:          CREATE
@@ -72,6 +71,41 @@ router.get('/api/cards/:id', (req, res) => {
       res.status(500).json({ error: error });
     });
   });
+
+/**
+ * Action:          DESTROY
+ * Method:          DELETE
+ * URI:             /api/cards/:id
+ * Description:     Delete a card by ID
+ */
+router.delete('/api/cards/:id', (req, res) => {
+  Card.findById(req.params.id)
+    .then((card) => {
+      console.log('card:', card);
+      if (card) {
+        // Pass the result of Mongoose's `.remove` method to the next `.then`
+        return card.deleteOne();
+      } else {
+        // If we coudn't find a document with the matching ID
+        res.status(404).json({
+          error: {
+            name: 'DocumentNotFoundError',
+            message: 'The provided ID doesn\'t match any documents'
+          }
+        });
+      }
+    })
+    .then(() => {
+      // If the deletion succeeded, return 204 and no JSON
+      res.status(204).end();
+    })
+    // Catch any error that might occur
+    .catch((error) => {
+      console.log(error)
+      res.status(500).json({ error: error });
+    });
+});
+
 
 // Export the Router so we can use it in the `server.js` file
 module.exports = router;
