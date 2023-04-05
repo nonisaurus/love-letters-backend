@@ -10,7 +10,7 @@ const messageSchema = new mongoose.Schema({
     comment: {
         type: String,
         required: true,
-        minlength: 10,
+        minlength: 1,
         maxlength: 200
     }
 }, {

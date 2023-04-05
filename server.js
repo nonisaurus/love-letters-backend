@@ -13,6 +13,7 @@ mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
 const indexRouter = require('./routes/index');
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
+const messageRouter = require('./routes/messages');
 
 // Instantiate Express Application Object
 const app = express();
@@ -32,6 +33,7 @@ app.use(express.json());
 app.use(indexRouter);
 app.use(cardsRouter);
 app.use(usersRouter);
+app.use(messageRouter);
 
 // Start the server and listen for requests on the given port
 app.listen(port, () => console.log(`listening on port ${port}`));
