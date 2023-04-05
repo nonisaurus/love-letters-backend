@@ -18,7 +18,7 @@ router.get('/api/users', (req, res) => {
     User.find()
     .then((user) => {
         if (user){
-            res.status(200).json({ user: user[0].username});
+            res.status(200).json({ user: user});
         } else {
             res.status(404).json({user: 'Page Not Found'})
         }
@@ -51,19 +51,20 @@ router.get('/api/users/:username', (req, res) => {
 /**
  * Action:          SHOW
  * Method:          GET
- * URI:             /api/users/:userID
+ * URI:             /api/user/:userID
  * Description:     Get users by id
  */
-router.get('/api/users/:userID', (req, res) => {
-    User.findById(req.params.userID)
+router.get('/api/user/:id', (req, res) => {
+    User.findById(req.params.id)
     .then((user) => {
-        if (user.length > 0) {
-            res.status(200).json({user: user[0].username})
+       if (user) {
+            res.status(200).json({user: user})
         } else {
             res.status(404).json({user: 'Page Not Found'})
         }
     })
     .catch((error) => {
+        console.log('CATCH error>>>', error)
         res.status(500).json({error: error})
     })
 })
@@ -94,7 +95,7 @@ router.patch('/api/users/:userID', (req, res) => {
     User.findById(req.params.userID)
     .then((user) => {
         if (user) {
-            return user.update(req.body.user)
+            return user.updateOne(req.body.user)
         } else {
             res.status(404).json({
                 error: {
@@ -119,11 +120,11 @@ Method:         DELETE
 URI:            /api/user/:userID
 Description:    Delete user via user id
 */
-router.delete('/api/users/:userID', (req, res) => {
-    User.findById(req.param.userID)
+router.delete('/api/user/:userID', (req, res) => {
+    User.findById(req.params.userID)
     .then((user) => {
         if (user) {
-            return user.remove()
+            return user.deleteOne()
         } else {
             res.status(404).json({
                 error: {
