@@ -5,9 +5,7 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     username: {
       type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 30
+      required: true
     },
     firstName: { type: String},
     lastName: { type: String},
@@ -15,8 +13,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true },
     password: {
       type: String,
-      required: true,
-      minlength: 6
+      required: true
     },
     profileImg: { data: Buffer, contentType: String},
     bio: { type: String},
