@@ -1,5 +1,7 @@
 // Require neccessary NPM Package
 const express = require('express');
+const passport = require('passport');
+
 
 // Require Mongoose Model for Card
 const Card = require('./../models/card');
@@ -13,7 +15,7 @@ const router = express.Router();
  * URI:             /api/cards
  * Description:     Get all Cards
  */
-router.get('/api/cards', (req, res) => {
+router.get('/api/cards', passport.authenticate('jwt', { session: false }), (req, res) => {
     Card.find()
     // Return all Cards as an Array
     .then((cards) => {
@@ -31,7 +33,7 @@ router.get('/api/cards', (req, res) => {
  * URI:             /api/cards/:id
  * Description:     Get a Card by Card ID
  */
-router.get('/api/cards/:id', (req, res) => {
+router.get('/api/cards/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     Card.findById(req.params.id)
       .then((cards) => {
         if (cards) {
@@ -58,7 +60,7 @@ router.get('/api/cards/:id', (req, res) => {
    * URI:             /api/cards
    * Description:     Create a new Card
    */
-  router.post('/api/cards', (req, res) => {
+  router.post('/api/cards', passport.authenticate('jwt', { session: false }), (req, res) => {
     Card.create(req.body.card)
     // On a successfull `create` action, respond with 201
     // HTTP status and the conent of the new Card.
@@ -78,7 +80,7 @@ router.get('/api/cards/:id', (req, res) => {
  * URI:             /api/cards/:id
  * Description:     Delete a card by ID
  */
-router.delete('/api/cards/:id', (req, res) => {
+router.delete('/api/cards/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
   Card.findById(req.params.id)
     .then((card) => {
       console.log('card:', card);

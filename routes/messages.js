@@ -1,6 +1,7 @@
 // Require neccessary NPM Package
 const express = require('express');
-const mongoose = require('mongoose');
+const passport = require('passport');
+
 
 // Require Mongoose Model for Article
 const Message = require('../models/message')
@@ -14,7 +15,7 @@ const router = express.Router()
  * URI:             /api/message
  * Description:     Get all messages
  */
-router.get('/api/messages', (req, res) => {
+router.get('/api/messages', passport.authenticate('jwt', { session: false }), (req, res) => {
     Message.find()
     // to use _id from User schema that was referenced as userId in Message schema
     .populate('userId')
@@ -34,7 +35,7 @@ router.get('/api/messages', (req, res) => {
  * URI:             /api/message/:id
  * Description:     Get a messages by its ID
  */
-router.get('/api/messages/:id', (req, res) => {
+router.get('/api/messages/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     Message.findById(req.params.id)
     .populate('userId')
     .then((message) => {
@@ -60,7 +61,7 @@ router.get('/api/messages/:id', (req, res) => {
  * URI:             /api/message
  * Description:     Create a message
  */
-router.post('/api/message', (req, res) => {
+router.post('/api/message', passport.authenticate('jwt', { session: false }), (req, res) => {
     Message.create(req.body.message)
     .then((message) => {
         res.status(201).json({message: message})
@@ -76,7 +77,7 @@ router.post('/api/message', (req, res) => {
  * URI:             /api/message/:id
  * Description:     Update a message by its ID
  */
-router.put('/api/messages/:id', (req, res) => {
+router.put('/api/messages/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     Message.findById(req.params.id)
     .then((message) => {
         if (message) {
@@ -105,7 +106,7 @@ router.put('/api/messages/:id', (req, res) => {
  * URI:             /api/message/:id
  * Description:     Delete a message by its ID
  */
-router.delete('/api/messages/:id', (req, res) => {
+router.delete('/api/messages/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     Message.findById(req.params.id)
       .then((message) => {
         console.log('message:', message);

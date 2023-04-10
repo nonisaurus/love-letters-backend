@@ -1,6 +1,7 @@
 // Require neccessary NPM Package
 const express = require('express');
-const { route } = require('.');
+const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 // Require Mongoose Model for Card
 const User = require('./../models/user');
@@ -34,7 +35,7 @@ router.get('/api/users', (req, res) => {
  * URI:             /api/users/:username
  * Description:     Get users by username
  */
-router.get('/api/users/:username', (req, res) => {
+router.get('/api/users/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
     User.findOne({ username: req.params.username })
     .then((user) => {
         if (user) {
@@ -54,7 +55,7 @@ router.get('/api/users/:username', (req, res) => {
  * URI:             /api/user/:userID
  * Description:     Get users by id
  */
-router.get('/api/user/:id', (req, res) => {
+router.get('/api/user/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     User.findById(req.params.id)
     .then((user) => {
        if (user) {
@@ -75,7 +76,16 @@ Method:        POST
 URI:        /api/user
 Description:    Create A New User
 */
-router.post('/api/users', (req, res) => {
+const saltRounds = 10;
+router.post('/api/user', (req, res) => {
+    if (req.body.user.username.length >=6 && req.body.user.username.length <=20 && req.body.user.password.length >= 6 && req.body.user.password.length <=20) {
+    const { username, password } = req.body.user
+    bcrypt.hash(password, saltRounds).then((hash) => {
+        User.create({
+            username: username,
+            password: hash
+        })
+    })
     User.create(req.body.user)
     .then((newUser) => {
         res.status(201).json({user: newUser})
@@ -83,6 +93,12 @@ router.post('/api/users', (req, res) => {
     .catch((error) => {
         res.status(500).json({error: error})
     })
+    } else {
+        res.status(406).json({ error: {
+            name: 'UsernameAndPasswordLengthsWrong',
+            message: 'Username and Password must be between 8-20 characters'
+        }})
+    }
 })
 
 /*
@@ -91,7 +107,7 @@ Method:        PUT/PATCH
 URI:        /api/user/:userID
 Description:    Update user by user ID
 */
-router.patch('/api/users/:userID', (req, res) => {
+router.patch('/api/users/:userID', passport.authenticate('jwt', { session: false }), (req, res) => {
     User.findById(req.params.userID)
     .then((user) => {
         if (user) {
@@ -120,7 +136,7 @@ Method:         DELETE
 URI:            /api/user/:userID
 Description:    Delete user via user id
 */
-router.delete('/api/user/:userID', (req, res) => {
+router.delete('/api/user/:userID', passport.authenticate('jwt', { session: false }), (req, res) => {
     User.findById(req.params.userID)
     .then((user) => {
         if (user) {
