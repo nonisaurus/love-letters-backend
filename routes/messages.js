@@ -15,7 +15,7 @@ const router = express.Router()
  * URI:             /api/message
  * Description:     Get all messages
  */
-router.get('/api/messages', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/api/messages', (req, res) => {
     Message.find()
     // to use _id from User schema that was referenced as userId in Message schema
     .populate('userId')
@@ -107,6 +107,7 @@ router.put('/api/messages/:id', passport.authenticate('jwt', { session: false })
  * Description:     Delete a message by its ID
  */
 router.delete('/api/messages/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  console.log('DELETE')
     Message.findById(req.params.id)
       .then((message) => {
         console.log('message:', message);
@@ -129,7 +130,8 @@ router.delete('/api/messages/:id', passport.authenticate('jwt', { session: false
       })
       // Catch any error that might occur
       .catch((error) => {
-        console.log(error)
+
+        console.log('delete catch', error)
         res.status(500).json({ error: error });
       });
   });

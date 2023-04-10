@@ -36,7 +36,6 @@ router.get('/api/users', (req, res) => {
  * Description:     Get users by username
  */
 router.get('/api/users/:username', (req, res) => {
-    console.log('get request', req.params.username )
     User.findOne({ username: req.params.username })
     .then((user) => {
         if (user) {
