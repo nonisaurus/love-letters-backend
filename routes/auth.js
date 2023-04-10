@@ -30,10 +30,15 @@ router.post('/api/login', (req, res) => {
         if (User.find({username: req.body.username})) {
             // Get password and then run bcrypt
             User.findOne({username: req.body.username})
-            .then((user) => {return user})
+            // .then((user) => {return user})
             .then( (user) => {
+                console.log('> user? ', user);
+                if (user) {
                 // Use bcrypt to compare the plaintext password and encrypted password
                 bcrypt.compare(req.body.password, user.password, (error, result) => {
+
+                    console.log('body passowrd', req.body.password)
+                    console.log('user passowrd', user.password)
 
                     if (result) {
                         // Select the information that want to send to the user.
@@ -44,7 +49,7 @@ router.post('/api/login', (req, res) => {
                         const token = jwt.sign(payload, jwtOptions.secretOrKey, { expiresIn: 60 });
 
                         // Send the JSON Web Token back to the user
-                        res.status(200).json({ success: true, token: token });
+                        res.status(200).json({ success: true, token: token, userId: user._id });
                     }
 
                     // If !resolve then return invalid password
@@ -61,7 +66,7 @@ router.post('/api/login', (req, res) => {
                         res.status(500).json( { message: `Problem, ${error}` } )
                     }
                 })
-            })
+            }})
                     
         } else {
             // If username not found, return invalid username

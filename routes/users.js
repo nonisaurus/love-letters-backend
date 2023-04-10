@@ -35,7 +35,8 @@ router.get('/api/users', (req, res) => {
  * URI:             /api/users/:username
  * Description:     Get users by username
  */
-router.get('/api/users/:username', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/api/users/:username', (req, res) => {
+    console.log('get request', req.params.username )
     User.findOne({ username: req.params.username })
     .then((user) => {
         if (user) {
@@ -78,15 +79,15 @@ Description:    Create A New User
 */
 const saltRounds = 10;
 router.post('/api/user', (req, res) => {
-    if (req.body.user.username.length >=6 && req.body.user.username.length <=20 && req.body.user.password.length >= 6 && req.body.user.password.length <=20) {
-    const { username, password } = req.body.user
+    if (req.body.username.length >=6 && req.body.username.length <=20 && req.body.password.length >= 6 && req.body.password.length <=20) {
+    const { username, password } = req.body
     bcrypt.hash(password, saltRounds).then((hash) => {
         User.create({
             username: username,
             password: hash
         })
     })
-    User.create(req.body.user)
+    // User.create(req.body)
     .then((newUser) => {
         res.status(201).json({user: newUser})
     })
