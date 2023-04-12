@@ -32,13 +32,9 @@ router.post('/api/login', (req, res) => {
             User.findOne({username: req.body.username})
             // .then((user) => {return user})
             .then( (user) => {
-                console.log('> user? ', user);
                 if (user) {
                 // Use bcrypt to compare the plaintext password and encrypted password
                 bcrypt.compare(req.body.password, user.password, (error, result) => {
-
-                    console.log('body passowrd', req.body.password)
-                    console.log('user passowrd', user.password)
 
                     if (result) {
                         // Select the information that want to send to the user.
@@ -46,10 +42,10 @@ router.post('/api/login', (req, res) => {
                             id: user._id
                         };
                         // Build a JSON Web Token using the payload - This will last 300 seconds
-                        const token = jwt.sign(payload, jwtOptions.secretOrKey, { expiresIn: 60 });
+                        const token = jwt.sign(payload, jwtOptions.secretOrKey, { expiresIn: 6000 });
 
                         // Send the JSON Web Token back to the user
-                        res.status(200).json({ success: true, token: token, userId: user._id });
+                        res.status(200).json({ success: true, token: token, userId: user._id, username: user.username });
                     }
 
                     // If !resolve then return invalid password
