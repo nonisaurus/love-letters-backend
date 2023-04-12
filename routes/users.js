@@ -107,11 +107,14 @@ Method:        PUT/PATCH
 URI:        /api/user/:userID
 Description:    Update user by user ID
 */
-router.patch('/api/users/:userID', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.put('/api/users/:userID', passport.authenticate('jwt', { session: false }), (req, res) => {
+    console.log('req >>>', req)
     User.findById(req.params.userID)
     .then((user) => {
         if (user) {
-            return user.updateOne(req.body.user)
+            console.log('user >>>', user)
+            console.log('user body >>>', req.body)
+            return user.updateOne(req.body)
         } else {
             res.status(404).json({
                 error: {
