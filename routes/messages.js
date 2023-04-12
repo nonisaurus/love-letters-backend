@@ -62,12 +62,12 @@ router.get('/api/messages/:id', passport.authenticate('jwt', { session: false })
  * Description:     Create a message
  */
 router.post('/api/message', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Message.create(req.body.message)
+    Message.create({userId: req.body.userId , comment: req.body.messageData})
     .then((message) => {
         res.status(201).json({message: message})
     })
     .catch((error) => {
-        res.status(500).json({error: error})
+         res.status(500).json({error: error})
     })
 })
 
@@ -78,10 +78,10 @@ router.post('/api/message', passport.authenticate('jwt', { session: false }), (r
  * Description:     Update a message by its ID
  */
 router.put('/api/messages/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
-    Message.findById(req.params.id)
+    Message.findById(req.body.id)
     .then((message) => {
         if (message) {
-            return message.updateOne(req.body.message)
+            return message.updateOne({comment: req.body.comment})
         } else {
             res.status(404).json({
                 error: {
@@ -107,10 +107,8 @@ router.put('/api/messages/:id', passport.authenticate('jwt', { session: false })
  * Description:     Delete a message by its ID
  */
 router.delete('/api/messages/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
-  console.log('DELETE')
     Message.findById(req.params.id)
       .then((message) => {
-        console.log('message:', message);
         if (message) {
           // Pass the result of Mongoose's `.remove` method to the next `.then`
           return message.deleteOne();
@@ -130,8 +128,6 @@ router.delete('/api/messages/:id', passport.authenticate('jwt', { session: false
       })
       // Catch any error that might occur
       .catch((error) => {
-
-        console.log('delete catch', error)
         res.status(500).json({ error: error });
       });
   });
