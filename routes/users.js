@@ -108,12 +108,9 @@ URI:        /api/user/:userID
 Description:    Update user by user ID
 */
 router.put('/api/users/:userID', passport.authenticate('jwt', { session: false }), (req, res) => {
-    console.log('req >>>', req)
     User.findById(req.params.userID)
     .then((user) => {
         if (user) {
-            console.log('user >>>', user)
-            console.log('user body >>>', req.body)
             return user.updateOne(req.body)
         } else {
             res.status(404).json({
@@ -140,6 +137,7 @@ URI:            /api/user/:userID
 Description:    Delete user via user id
 */
 router.delete('/api/user/:userID', passport.authenticate('jwt', { session: false }), (req, res) => {
+    console.log('userid', req.params.userID)
     User.findById(req.params.userID)
     .then((user) => {
         if (user) {
