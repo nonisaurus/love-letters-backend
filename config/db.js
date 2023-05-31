@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config()
+
 // Creating a base name for the MongoDB
 const mongooseBaseName = 'loveletters';
 
@@ -9,7 +12,7 @@ const database = {
 
 // Indentify if development environment is Test or Development
 // Select a Database based on whether a test file was executed before `server.js`
-const localDB = process.env.TESTENV ? database.test : database.development;
+const localDB = process.env.EXPRESS_PORT ? database.test : database.development;
 
 // Environment variable MONGODB_URI will be avaiable in
 // Heroku production environment. Otherwise use Test or

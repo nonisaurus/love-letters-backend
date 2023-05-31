@@ -77,7 +77,7 @@ URI:        /api/user
 Description:    Create A New User
 */
 const saltRounds = 10;
-router.post('/api/user', (req, res) => {
+router.post('api/user', (req, res) => {
     if (req.body.username.length >=6 && req.body.username.length <=20 && req.body.password.length >= 6 && req.body.password.length <=20) {
     const { username, password } = req.body
     bcrypt.hash(password, saltRounds).then((hash) => {

@@ -26,7 +26,7 @@ const indexRouter = require('./routes/index');
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
 const messageRouter = require('./routes/messages');
-const authRouter = require('./routes/Auth');
+const authRouter = require('./routes/auth');
 
 
 // Instantiate Express Application Object
@@ -41,9 +41,11 @@ const reactPort = 3000;
 app.use(express.json());
 
 // Set CORS headers on responses from this API using 'cors' NPM package
-app.use(cors({
-    origin: process.env.CLIENT_ORIGIN || `http://localhost:${reactPort}`
-  }));
+app.use(cors(
+  // {
+    // origin: process.env.CLIENT_ORIGIN || `http://localhost:${reactPort}`
+  // }
+  ));
 
 // Define auth strategy from before - mount this strategy
 passport.use(strategy);
