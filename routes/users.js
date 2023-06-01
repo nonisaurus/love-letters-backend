@@ -78,29 +78,40 @@ Description:    Create A New User
 */
 const saltRounds = 10;
 router.post('/api/user', (req, res) => {
-    if (req.body.username.length >=6 && req.body.username.length <=20 && req.body.password.length >= 6 && req.body.password.length <=20) {
-    const { username, password } = req.body
-    bcrypt.hash(password, saltRounds).then((hash) => {
-        User.create({
-            username: username,
-            password: hash
-        })
-    })
-    // User.create(req.body)
-    .then((newUser) => {
-        res.status(201).json({user: newUser})
-    })
-    .catch((error) => {
-        res.status(500).json({error: {
-            name: 'somethingWentWrongInPost',
-            message: 'Failed to create user'
-        }})
-    })
-    } else {
-        res.status(406).json({ error: {
-            name: 'UsernameAndPasswordLengthsWrong',
-            message: 'Username and Password must be between 8-20 characters'
-        }})
+    console.log('req >>>', req)
+    console.log('res >>>', res)
+    if (
+        req.body.username.length >=6 && 
+        req.body.username.length <=20 && 
+        req.body.password.length >= 6 && 
+        req.body.password.length <=20
+        ) {
+            const { username, password } = req.body
+            console.log('username >>>', username)
+            console.log('password >>>', password)
+            bcrypt
+                .hash(password, saltRounds)
+                .then((hash) => {
+                    return User.create({
+                        username: username,
+                        password: hash
+                    })
+                })
+                // User.create(req.body)
+                .then((newUser) => {
+                    res.status(201).json({user: newUser})
+                })
+                .catch((error) => {
+                    res.status(500).json({error: {
+                        name: 'somethingWentWrongInPost',
+                        message: 'Failed to create user'
+                    }})
+                })
+        } else {
+            res.status(406).json({ error: {
+                name: 'UsernameAndPasswordLengthsWrong',
+                message: 'Username and Password must be between 8-20 characters'
+            }})
     }
 })
 
