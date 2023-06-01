@@ -42,9 +42,9 @@ app.use(express.json());
 
 // Set CORS headers on responses from this API using 'cors' NPM package
 app.use(cors(
-  // {
-    // origin: process.env.CLIENT_ORIGIN || `http://localhost:${reactPort}`
-  // }
+  {
+    origin: process.env.CLIENT_ORIGIN || `http://localhost:${reactPort}`
+  }
   ));
 
 // Define auth strategy from before - mount this strategy
