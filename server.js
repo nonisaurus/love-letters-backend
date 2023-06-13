@@ -49,7 +49,7 @@ app.use(cors(
     credentials: true
   }
   ));
-
+ 
 // enables CORS for all routes, allowing requests from any origin to access the backend server's resources
 app.options('*', cors()); 
 
