@@ -51,7 +51,7 @@ app.use(cors(
     credentials: true
   }
   ));
- 
+  
 
 // Define auth strategy from before - mount this strategy
 passport.use(strategy);
