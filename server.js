@@ -40,18 +40,18 @@ const reactPort = 3000;
 // The method `.use` sets up middleware for Express apps.
 app.use(express.json());
 
+// enables CORS for all routes, allowing requests from any origin to access the backend server's resources
+app.options('*', cors()); 
 
 // Set CORS headers on responses from this API using 'cors' NPM package
 app.use(cors(
   {
     origin: process.env.CLIENT_ORIGIN || `http://localhost:${reactPort}`,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE','OPTIONS'],
     credentials: true
   }
   ));
  
-// enables CORS for all routes, allowing requests from any origin to access the backend server's resources
-app.options('*', cors()); 
 
 // Define auth strategy from before - mount this strategy
 passport.use(strategy);
