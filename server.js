@@ -50,8 +50,10 @@ app.use(cors(
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE','OPTIONS'],
     credentials: true
   }
-  ));
-  
+));
+
+   
+
 
 // Define auth strategy from before - mount this strategy
 passport.use(strategy);
