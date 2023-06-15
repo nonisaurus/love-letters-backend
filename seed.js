@@ -4,10 +4,10 @@ const db = require('./config/db')
 const User = require('./models/user')
 const Card = require('./models/card')
 
-mongoose.connect(db, { useNewUrlParser: true } );
-mongoose.connection.once('open', () => {console.log('Connected to MongoDB >>> seed')});
+mongoose.connect(db, { useNewUrlParser: true } )
+mongoose.connection.once('open', () => {console.log('Connected to MongoDB >>> seed')})
 
-const cards = [
+const cardsSeed = [
     {
         "name":"Princess",
         "score": "8",
@@ -31,8 +31,18 @@ const cards = [
         "score": "5",
         "effect": "Player may choose any player (including themselves) to discard their hand and draw a new one.",
         "quantity":"2"
+    },{
+        "name":"Prince",
+        "score": "5",
+        "effect": "Player may choose any player (including themselves) to discard their hand and draw a new one.",
+        "quantity":"2"
     },
     {
+        "name":"Handmaid",
+        "score": "4",
+        "effect": "Player cannot be affected by any other player's cards until their next turn.",
+        "quantity":"2"
+    },{
         "name":"Handmaid",
         "score": "4",
         "effect": "Player cannot be affected by any other player's cards until their next turn.",
@@ -43,14 +53,43 @@ const cards = [
         "score": "3",
         "effect": "Player may choose another player and privately compare hands. The player with the lower-value card is eliminated from the round.",
         "quantity":"2"
+    },{
+        "name":"Baron",
+        "score": "3",
+        "effect": "Player may choose another player and privately compare hands. The player with the lower-value card is eliminated from the round.",
+        "quantity":"2"
     },
     {
         "name":"Priest",
         "score": "2",
         "effect": "Player may privately see another player's hand.",
         "quantity":"2"
-    },
-    {
+    },{
+        "name":"Priest",
+        "score": "2",
+        "effect": "Player may privately see another player's hand.",
+        "quantity":"2"
+    },{
+        "name":"Guard",
+        "score": "1",
+        "effect": "Player may choose another player and name a card other than Guard. If the chosen player's hand contains that card, that player is eliminated from the round.",
+        "quantity":"5"
+    },{
+        "name":"Guard",
+        "score": "1",
+        "effect": "Player may choose another player and name a card other than Guard. If the chosen player's hand contains that card, that player is eliminated from the round.",
+        "quantity":"5"
+    },{
+        "name":"Guard",
+        "score": "1",
+        "effect": "Player may choose another player and name a card other than Guard. If the chosen player's hand contains that card, that player is eliminated from the round.",
+        "quantity":"5"
+    },{
+        "name":"Guard",
+        "score": "1",
+        "effect": "Player may choose another player and name a card other than Guard. If the chosen player's hand contains that card, that player is eliminated from the round.",
+        "quantity":"5"
+    },{
         "name":"Guard",
         "score": "1",
         "effect": "Player may choose another player and name a card other than Guard. If the chosen player's hand contains that card, that player is eliminated from the round.",
@@ -58,10 +97,12 @@ const cards = [
     }
 ]
 
-Card.insertMany(cards, (error, cards) => {
-    if (error) {
-        res.status(500).json( { error: error })
-    } else {
-        res.status(201).json( { cards: cards })
-    }
-})
+// const cardsSeed = Card.insertMany(cards)
+//   .then((createdCards) => {
+//     // console.log('Cards created:', createdCards)
+//   })
+//   .catch((error) => {
+//     console.log('Error creating cards:', error)
+//   });
+
+  module.exports = cardsSeed

@@ -2,7 +2,6 @@
 const express = require('express');
 const passport = require('passport');
 
-
 // Require Mongoose Model for Article
 const Message = require('../models/message')
 
